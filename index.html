@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse du Budget Prévisionnel</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            padding: 40px 20px;
+            transition: background-color 0.3s ease; /* Transition pour la couleur de fond */
+        }
+
+        h1 {
+            text-align: center;
+            color: #E30613;
+            font-size: 32px;
+            margin-bottom: 40px;
+            transition: transform 0.3s ease; /* Ajout d'une animation */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .budget-table {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            overflow: hidden;
+            margin-bottom: 40px;
+            border-collapse: collapse;
+            transition: transform 0.2s ease; /* Effet de transformation */
+        }
+
+        .budget-table th, .budget-table td {
+            padding: 15px;
+            text-align: left;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .budget-table th {
+            background-color: #E30613;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .budget-table tr:nth-child(even) {
+            background-color: #f7f7f7;
+        }
+
+        .budget-table tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.02); /* Effet de zoom au survol */
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 900px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .chart-container:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Ombre au survol */
+        }
+
+        .chart-container .chart {
+            width: 100px;
+            height: 100px;
+            transition: transform 0.3s ease; /* Effet de transformation */
+        }
+
+        .chart-container .chart:hover {
+            transform: scale(1.1); /* Effet de zoom sur le graphique */
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .legend div {
+            margin: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .legend div:hover {
+            transform: scale(1.1); /* Zoom au survol des légendes */
+            color: #E30613; /* Changement de couleur au survol */
+        }
+
+        .legend span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .legend span.red { background-color: #E30613; }
+        .legend span.black { background-color: #000000; }
+        .legend span.gray { background-color: #808080; }
+        .legend span.light-gray { background-color: #D3D3D3; }
+        .legend span.blue { background-color: #007BFF; }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 40px;
+        }
+
+        .total {
+            font-size: 18px;
+            text-align: right;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #E30613;
+            transition: transform 0.2s ease;
+        }
+
+        .total:hover {
+            transform: scale(1.05); /* Effet de zoom au survol du total */
+        }
+
+        /* Effet de clic */
+        .clicked {
+            transform: scale(0.98); /* Réduction à l'activation du clic */
+            transition: transform 0.1s ease;
+        }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .chart-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .legend {
+                margin-top: 20px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Analyse du Budget Prévisionnel</h1>
+
+        <!-- Table des données de budget -->
+        <table class="budget-table">
+            <thead>
+                <tr>
+                    <th>Poste</th>
+                    <th>Description</th>
+                    <th>Coût Total (€)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Développement Technologique</td>
+                    <td>Création du site web et de l'application mobile</td>
+                    <td>45,000</td>
+                </tr>
+                <tr>
+                    <td>Marketing Numérique</td>
+                    <td>Campagnes publicitaires et contenu réseaux sociaux</td>
+                    <td>18,000</td>
+                </tr>
+                <tr>
+                    <td>Ressources Humaines</td>
+                    <td>Consultants UX/UI, développeurs, et spécialistes marketing</td>
+                    <td>30,000</td>
+                </tr>
+                <tr>
+                    <td>Infrastructure et Maintenance</td>
+                    <td>Hébergement, sécurité, et maintenance</td>
+                    <td>9,000</td>
+                </tr>
+                <tr>
+                    <td>Suivi et Optimisation</td>
+                    <td>Analyse des données et ajustements stratégiques</td>
+                    <td>3,000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Total -->
+        <div class="total">
+            Total : 105,000 €
+        </div>
+
+        <!-- Graphique et légendes en bas -->
+        <div class="chart-container">
+            <canvas id="budgetChart" class="chart"></canvas>
+            <div class="legend">
+                <div><span class="red"></span> Développement Technologique</div>
+                <div><span class="black"></span> Marketing Numérique</div>
+                <div><span class="gray"></span> Ressources Humaines</div>
+                <div><span class="light-gray"></span> Infrastructure et Maintenance</div>
+                <div><span class="blue"></span> Suivi et Optimisation</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Analyse Budgétaire - Tous droits réservés</p>
+        </div>
+    </div>
+
+    <!-- Script Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('budgetChart').getContext('2d');
+        const budgetChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Développement Technologique', 'Marketing Numérique', 'Ressources Humaines', 'Infrastructure et Maintenance', 'Suivi et Optimisation'],
+                datasets: [{
+                    data: [45000, 18000, 30000, 9000, 3000],
+                    backgroundColor: ['#E30613', '#000000', '#808080', '#D3D3D3', '#007BFF'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Effet de clic : ajouter la classe clicked lorsque l'élément est cliqué
+        document.querySelectorAll('.legend div').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('clicked');
+            });
+        });
+    </script>
+
+</body>
+</html>
